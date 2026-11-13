@@ -1,0 +1,115 @@
+{
+  "name": "vibescan",
+  "displayName": "VibeScan - AI Code Security",
+  "description": "Scan your AI-generated code for the VibeScan Top 10 vulnerabilities",
+  "version": "1.0.0",
+  "publisher": "universoul",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gotsigns10-cell/vibescan-vscode"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Linters", "Other"],
+  "keywords": ["security", "ai", "vibe-coding", "scanner", "vulnerability"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vibescan.scanWorkspace",
+        "title": "VibeScan: Scan Workspace",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "vibescan.scanFile",
+        "title": "VibeScan: Scan Current File",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "vibescan.showResults",
+        "title": "VibeScan: Show Results",
+        "icon": "$(list-unordered)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vibescan",
+          "title": "VibeScan",
+          "icon": "$(shield)"
+        }
+      ]
+    },
+    "views": {
+      "vibescan": [
+        {
+          "id": "vibescanResults",
+          "name": "Scan Results"
+        },
+        {
+          "id": "vibescanTop10",
+          "name": "Top 10 Vulnerabilities"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "VibeScan",
+      "properties": {
+        "vibescan.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "VibeScan API key for private repos"
+        },
+        "vibescan.apiUrl": {
+          "type": "string",
+          "default": "https://scan.digisigns.link",
+          "description": "VibeScan API endpoint"
+        },
+        "vibescan.scanOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically scan files on save"
+        },
+        "vibescan.severityThreshold": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "default": "medium",
+          "description": "Minimum severity to show in problems panel"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vibescan.scanFile",
+          "group": "vibescan"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "vibescan.scanWorkspace",
+          "group": "vibescan"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
